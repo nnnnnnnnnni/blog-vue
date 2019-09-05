@@ -11,11 +11,12 @@ import write from '@/components/write'
 import permission from '@/components/permission'
 import adminTag from '@/components/adminTag'
 import adminCategories from '@/components/adminCategories'
+import search from '@/components/search'
 
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
+  mode: 'history',
   routes: [{
       path: '/',
       name: 'index',
@@ -60,6 +61,10 @@ export default new Router({
       path: '/adminCategories',
       name: 'adminCategories',
       component: adminCategories
+    },{
+      path: '/search/:type&:key',
+      name: 'search',
+      component: search
     }
   ]
 })

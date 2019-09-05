@@ -33,7 +33,7 @@
 					<div class="name">正文:</div>
 					<div class="area">
 						<textarea name="edit" id="" v-model='edit'></textarea>
-						<div class="show" id="" v-html='show'></div>
+						<div class="show" id="show" v-html='show'></div>
 					</div>
 				</div>
 				<div class="btn">
@@ -67,12 +67,12 @@ export default {
 	watch: {
 		edit(){
 			var text = this.edit;
-		    //创建实例
 		    var converter = new showdown.Converter();
-		    //进行转换
 		    var html = converter.makeHtml(text);
-			    //展示到对应的地方  result便是id名称
 			this.show = html;
+			document.getElementById('show').querySelectorAll('pre code').forEach((block) => {
+				hljs.highlightBlock(block);
+			});
 		}
 	},
 	methods: {
@@ -115,6 +115,7 @@ export default {
 						this.title = ''
 						this.edit = ''
 						alert("成功!")
+						this.$router.push({name:'admin'})
 					} else{
 						alert("失败，请重试")
 					}
@@ -223,6 +224,7 @@ export default {
     width: auto;
     margin-right: 20px;
     padding: 0 10px;
+    cursor: pointer;
     line-height: 30px;
     font-size: 12px;
     color: #67c23a;

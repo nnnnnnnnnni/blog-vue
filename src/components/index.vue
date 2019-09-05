@@ -68,26 +68,40 @@ export default {
     pagetool
   },
   methods: {
-    initLen: function() {
-      this.pages = this.articleList.length;
+    initTitle: function() {
       document.title = "胜仔的博客";
-      console.log(parseInt(Number(this.pages) / 5));
     },
     pageChange: function(data) {
       this.currentPage = data || 1;
+      this.getList();
     },
     getList: function(){
-      this.axios.get('http://localhost:3000/article/list')
+      this.axios.get('http://localhost:3000/article/list',{params: {
+              isShow: true,
+              page: this.currentPage
+          }
+      })
       .then((res)=>{
         if(res.data.status == 200){
+          this.articleList = []
           this.articleList = res.data.data
         }
       })
     },
+    getCount: function(){
+      this.axios.get('http://localhost:3000/article/count')
+      .then((res)=>{
+        if(res.data.status == 200){
+          let count = parseInt(res.data.data / 6) +1
+          this.pages = count
+        }
+      })
+    }
   },
   created() {
+    this.getCount();
     this.getList(); 
-    this.initLen();
+    this.initTitle();
   },
   mounted() {
     this.pageChange();
@@ -170,9 +184,15 @@ export default {
   font-size: 1em;
   line-height: 2;
   color: #555;
+  height: 64px;
+  -webkit-line-clamp: 2; /* 设置超出多少行隐藏 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /* 设置 display 为 -webkit-box 或者 -webkit-inline-box 时为隐藏状态 */
+  display: -webkit-inline-box;
 }
 .main .more {
-  margin-top: 20px;
+  margin-top: 0px;
   text-align: left;
 }
 .main .more a {

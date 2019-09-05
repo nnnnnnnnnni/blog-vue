@@ -5,7 +5,7 @@
       <div class="title">标签</div>
       <div class="tags">
         <div class="tag" v-for="(item, index) in tagList " :key="index">
-          <router-link :to="{name:'articles', params:{id: item._id,title:item.title}}">{{item}}</router-link>
+          <router-link :to="{name:'search', params:{key: item,type:'标签'}}">{{item}}</router-link>
         </div>
       </div>
     </div>
@@ -19,20 +19,7 @@ export default {
   data() {
     return {
       current: "tag",
-      tagList: [
-        "前端",
-        "Html",
-        "Css",
-        "JavaScript",
-        "Vue.js",
-        "Git",
-        "Node.js",
-        "后端",
-        "原理",
-        "面试",
-        "Mongodb",
-        "Linux"
-      ]
+      tagList: []
     };
   },
   components: {
@@ -41,10 +28,19 @@ export default {
   methods: {
     initTitle: function() {
       document.title = "标签 | 胜仔的博客";
+    },
+    getTags: function(){
+      this.axios.get('http://localhost:3000/article/tags')
+      .then((res)=>{
+        if(res.data.status == 200){
+          this.tagList = res.data.data
+        }
+      })
     }
   },
   created() {
     this.initTitle();
+    this.getTags();
   }
 };
 </script>

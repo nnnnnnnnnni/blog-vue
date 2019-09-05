@@ -52,6 +52,7 @@ export default {
 		return {
 			current: 'admin',
 			id: '',
+			permission: [],
 			list:[]
 		}
 	},
@@ -67,6 +68,7 @@ export default {
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.id = res.data.data._id;
+					this.permission = res.data.data.permission
 					this.getList()
 				} else {
 					this.$router.push({name: 'login'})

@@ -10,7 +10,12 @@ Vue.config.productionTip = false
 axios.defaults.withCredentials = true;
 Vue.prototype.axios = axios
 
-
+Vue.directive('highlight',function (el) {
+  let blocks = el.querySelectorAll('pre code');
+  	blocks.forEach((block)=>{
+    hljs.highlightBlock(block)
+  })
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -19,9 +24,3 @@ new Vue({
   template: '<App/>'
 })
 
-Vue.directive('highlight',function (el) {
-  let blocks = el.querySelectorAll('pre code');
-  	blocks.forEach((block)=>{
-    hljs.highlightBlock(block)
-  })
-})

@@ -1,6 +1,6 @@
 <template>
   <div id="pagetool">
-  	<span class="back"><i class="fa fa-angle-left fa-2x" aria-hidden="true" ></i></span>
+  	<span class="back" @click='back()'><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></span>
   	<div class="pages">
   		<div class="item" 
   		v-for='(item,index) in pages' 
@@ -11,7 +11,7 @@
   			{{index+1}}
   		</div>
   	</div>
-  	<span class="gohead"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></span>
+  	<span class="gohead"  @click='gohead()'><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></span>
   </div>
 </template>
 
@@ -24,6 +24,16 @@ export default {
   	changePage: function(i){
   		this.$emit("nextPage",i)
   	},
+  	back: function(){
+  		if(this.currentPage>1){
+  			this.$emit("nextPage",this.currentPage-1)
+  		}
+  	},
+  	gohead: function(){
+  		if(this.currentPage<this.pages){
+  			this.$emit("nextPage",this.currentPage+1)
+  		}
+  	}
   },
   mounted(){
   }

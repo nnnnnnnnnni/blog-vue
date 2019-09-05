@@ -156,7 +156,7 @@ export default {
   width: 0px;
   height: 0px;
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 0px;
 }
 .imgActive {

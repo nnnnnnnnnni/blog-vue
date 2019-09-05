@@ -5,7 +5,7 @@
       <div class="title">文章分类</div>
       <div class="categories">
         <div class="categorie" v-for="(item, index) in categorieList " :key="index">
-          <router-link :to="{name:'articles', params:{id: item._id,title:item.title}}">{{item}}</router-link>
+          <router-link :to="{name:'search', params:{key: item._id,type:'分类'}}">{{item._id}}</router-link>
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       current: "categories",
-      categorieList: ["前端", "后端", "面试", "其他"]
+      categorieList: []
     };
   },
   components: {
@@ -28,10 +28,19 @@ export default {
   methods: {
     initTitle: function() {
       document.title = "文章分类 | 胜仔的博客";
+    },
+    getCategories: function(){
+      this.axios.get('http://localhost:3000/article/categories')
+      .then((res)=>{
+        if(res.data.status == 200){
+          this.categorieList = res.data.data
+        }
+      })
     }
   },
   created() {
     this.initTitle();
+    this.getCategories();
   }
 };
 </script>

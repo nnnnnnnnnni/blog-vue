@@ -32,14 +32,8 @@
             &nbsp;搜索
           </div>
           <div class="search" :style="{width: width + 'px'}">
-            <input type="text" />
-            <i id="searBtn" class="fa fa-search" aria-hidden="true"></i>
-          </div>
-          <div class="dialog">
-            <div class="item" v-for="(item,index) in resultList" :key="index">
-              <i class="fa fa-circle" aria-hidden="true"></i>
-              <router-link :to="{name:'articles', params:{id: item,title:item}}">{{item}}</router-link>
-            </div>
+            <input type="text" v-model='key' @keydown.enter='search()' />
+            <i id="searBtn" class="fa fa-search" aria-hidden="true" @click='search'></i>
           </div>
         </div>
       </div>
@@ -54,7 +48,8 @@ export default {
   data() {
     return {
       width: 0,
-      resultList: []
+      resultList: [],
+      key: '',
     };
   },
   methods: {
@@ -67,6 +62,12 @@ export default {
     },
     jump: function() {
       this.$router.push("/");
+    },
+    search: function(){
+      this.$router.push({name:'search',params:{key:this.key,type:'搜索'}});
+      if(this.active == 'search'){
+        this.$router.go(0)
+      }
     }
   }
 };
@@ -281,6 +282,7 @@ export default {
   margin-top: 19px;
   margin-right: 10px;
   float: left;
+  display: block;
 }
 .container .bar .item .dialog .item a {
   display: inline-block;
