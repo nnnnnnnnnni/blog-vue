@@ -6,6 +6,7 @@
       <div class="categories">
         <div class="categorie" v-for="(item, index) in categorieList " :key="index">
           <router-link :to="{name:'search', params:{key: item._id,type:'分类'}}">{{item._id}}</router-link>
+          <div class="num">({{item.totail}})</div>
         </div>
       </div>
     </div>
@@ -73,6 +74,7 @@ export default {
 .main .categories .categorie {
   padding: 5px 10px;
   margin: 10px auto;
+  color: #999;
 }
 .main .categories .categorie a {
   overflow-wrap: break-word;
@@ -83,6 +85,9 @@ export default {
   outline: none;
   text-decoration: none;
   cursor: pointer;
+}
+.main .categories .categorie .num{
+  display: inline-block;
 }
 .main .categories .categorie a:hover {
   color: #000;

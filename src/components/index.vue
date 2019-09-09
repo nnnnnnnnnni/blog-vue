@@ -89,7 +89,10 @@ export default {
       })
     },
     getCount: function(){
-      this.axios.get('http://localhost:3000/article/count')
+      this.axios.get('http://localhost:3000/article/count',{params: {
+              isShow: true
+          }
+      })
       .then((res)=>{
         if(res.data.status == 200){
           let count = parseInt(res.data.data / 6) +1

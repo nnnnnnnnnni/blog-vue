@@ -4,10 +4,10 @@
 			<div class="title">login</div>
 			<input style="display:none;" type="password">
 			<div class="item un">
-				<input type="email" v-model='mail' onfocus="this.placeholder=''" onblur="this.placeholder='请输入邮箱'" placeholder="请输入邮箱" name="username" id="">
+				<input type="email" v-model='mail' onfocus="this.placeholder=''" onblur="this.placeholder='请输入邮箱'" placeholder="请输入邮箱" name="username" id="email">
 			</div>
 			<div class="item pwd">
-				<input type="password" v-model='pwd' onfocus="this.placeholder=''" onblur="this.placeholder='请输入密码'" placeholder="请输入密码" name="pwd" id="">
+				<input type="password" v-model='pwd' onfocus="this.placeholder=''" onblur="this.placeholder='请输入密码'" placeholder="请输入密码" name="pwd" id="pwd">
 			</div>
 			<div class="item ck">
 				<div class="tip red" >{{tip}}</div>

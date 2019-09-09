@@ -2,7 +2,7 @@
   <div id="search">
     <navBar :active="current"></navBar>
     <div class="main">
-      <div class="container">
+      <div class="container" v-if='searchList.length != 0'>
         <div class="title">
           {{title}} <span class="type">{{type}}</span>
         </div>
@@ -14,6 +14,10 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="none" v-else>
+        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        没有结果
       </div>
     </div>
   </div>
@@ -39,7 +43,6 @@ export default {
       document.title = "搜索结果";
     },
     getReault: function(){
-      console.log(this.title,this.type)
       var type = this.type;
       let url = ''
       if(type == '标签'){
@@ -221,5 +224,16 @@ export default {
     transform: translateY(0%);
     opacity: 1;
   }
+}
+.none{
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+  font-size: 1.45em;
+  color: #999;
+  opacity: 0;
+  transform: translateY(-20%);
+  animation: show-down 1s 0.5s;
+  animation-fill-mode: forwards;
 }
 </style>

@@ -20,10 +20,12 @@
 					</thead>
 					<tbody>
 						<tr v-for='(item,index) in list' :key ='index'>
-							<td>{{item.title}}</td>
+							<td>
+								<router-link :to="{name:'articles', params:{id: item._id,title:item.title}}">{{item.title}}</router-link>
+							</td>
 							<td>{{item.categories}}</td>
 							<td>
-								<span v-for='(item,index) in item.tags' :key='index'>{{item}}</span>
+								<span class='tag bor' v-for='(item,index) in item.tags' :key='index'>{{item}}</span>
 							</td>
 							<td>{{item.create_time}}</td>
 							<td>{{item.update_time}}</td>
@@ -33,12 +35,20 @@
 								</span>
 							</td>
 							<td>
-								<button class="edit">修改</button>
-								<button class="del">删除</button>
+								<button class="edit" @click='update(item)'>修改</button>
+								<button class="del"  @click='del(item._id)'>删除</button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				<div class="tongji">
+					<span class="count">总共 {{count}} 篇文章</span>
+					<span class="right">
+						<i class="fa fa-caret-square-o-left fa-fw" aria-hidden="true" @click='back'></i>
+						<span>{{page}}</span>
+						<i class="fa fa-caret-square-o-right fa-fw" aria-hidden="true" @click='go'></i>
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -53,7 +63,9 @@ export default {
 			current: 'admin',
 			id: '',
 			permission: [],
-			list:[]
+			list:[],
+			count: 0,
+			page: 1,
 		}
 	},
 	components: {
@@ -70,6 +82,7 @@ export default {
 					this.id = res.data.data._id;
 					this.permission = res.data.data.permission
 					this.getList()
+					this.getCount();
 				} else {
 					this.$router.push({name: 'login'})
 				}
@@ -77,7 +90,9 @@ export default {
 		},
 		getList: function(){
 			this.axios.get('http://localhost:3000/article/list',{params: {
-                        id:this.id
+                        id:this.id,
+                        count: 10,
+                        page: this.page
                     }
                 })
 			.then((res)=>{
@@ -96,6 +111,42 @@ export default {
 					this.getList()
 				} 
 			})
+		},
+		update: function(data){
+			this.$router.push({name:'write',params:{data:data}})
+		},
+		del: function(index){
+			this.axios.post('http://localhost:3000/article/del',{id:index})
+			.then((res)=>{
+				if(res.data.status == 200){
+					this.getList()
+				}
+			})
+		},
+		getCount: function(){
+			this.axios.get('http://localhost:3000/article/count',{params: {
+                        id:this.id
+                    }
+                })
+			.then((res)=>{
+				if(res.data.status == 200){
+					this.count = res.data.data
+				}
+			})
+		},
+		back: function(){
+			let pages = parseInt(this.count/10)+1
+			if(this.page>1){
+				this.page--;
+				this.getList();
+			}
+		},
+		go: function(){
+			let pages = parseInt(this.count/10)+1
+			if(this.page<pages){
+				this.page++;
+				this.getList();
+			}
 		}
   	},
   	created() {
@@ -170,6 +221,13 @@ export default {
     min-height: 20px;
     line-height: 20px;
 }
+.main .all td a{
+	color: #409EFF;
+}
+.main .all td .bor:after{
+	content: ' ';
+	margin: 0 2px;
+}
 .main .all td button{
 	    padding: 7px 15px;
     font-size: 12px;
@@ -234,5 +292,25 @@ export default {
 }
 .main .all td .del:hover{
 	opacity: 0.8
+}
+.main .all .tongji{
+	border: 1px solid #dcdfe6;
+	height:  30px;
+	line-height: 30px;
+	padding: 0 30px;
+	margin-top: -1px;
+	position: relative;
+}
+.main .all .tongji .right{
+	float: right;
+	line-height: 30px;
+	color: #999;
+}
+.main .all .tongji .right i {
+	cursor: pointer;
+	margin: 0 10px;
+}
+.main .all .tongji .right i:hover{
+	color: #333
 }
 </style>

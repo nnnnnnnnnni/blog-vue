@@ -59,6 +59,7 @@ export default {
 			selected: '',
 			edit: '',
 			show: '',
+			_id: ''
 		}
 	},
 	components: {
@@ -85,6 +86,19 @@ export default {
 				if(res.data.status == 200){
 					this.tags = res.data.data.tags
 					this.categories = res.data.data.categories
+				    var converter = new showdown.Converter();
+			        let data = this.$route.params.data;
+			        this._id = data._id || ''
+			        this.title = data.title || ''
+			        this.tag_choosed = data.tags || []
+			        this.selected = data.categories || ''
+			        this.edit = data.text || ''
+			        this.show = converter.makeHtml(this.edit);
+			        for(let i =0;i<this.tag_choosed.length ;i++){
+			        	if(this.tags.indexOf(this.tag_choosed[i]) != -1){
+			        		this.tags.splice(this.tags.indexOf(this.tag_choosed[i]),1)
+			        	}
+			        }
 				} else {
 					this.$router.push({name: 'login'})
 				}
@@ -102,9 +116,15 @@ export default {
 		},
 		post: function(status){
 			if(!this.title || !this.tag_choosed || !this.selected || !this.edit){
-				alert("请填写完整")
-			} else{
-				this.axios.post('http://localhost:3000/article/post',{
+				return alert("请填写完整")
+			} else if(this._id){
+				var url = 'http://localhost:3000/article/update' 
+			} else if (!this._id){
+                var url = 'http://localhost:3000/article/post'
+			}
+
+			this.axios.post(url,{
+					id: this._id || '',
 					title: this.title,
 					tags: this.tag_choosed,
 					categories: this.selected,
@@ -120,7 +140,6 @@ export default {
 						alert("失败，请重试")
 					}
 				})
-			}
 		}
   	},
   	created() {
