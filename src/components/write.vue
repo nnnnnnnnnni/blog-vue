@@ -212,7 +212,7 @@ export default {
 	overflow: hidden;
 }
 .main .editArea .tag .check{
-	width: 50%;
+	width: calc(100% - 154px);
 	float: left;
 }
 .main .editArea .tag .check .candidate,.main .editArea .tag .check .choosed{

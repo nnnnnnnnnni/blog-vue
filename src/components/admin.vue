@@ -98,6 +98,9 @@ export default {
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.list = res.data.data
+					for(let i = res.data.data.length ;i<10 ;i++){
+						this.list.push([])
+					}
 				}
 			})
 		},
@@ -159,6 +162,7 @@ export default {
 <style scoped>
 .main{
 	margin-left: 250px;
+	overflow: hidden;
 }
 .main .top{
 	position: fixed;

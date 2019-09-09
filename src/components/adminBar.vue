@@ -1,7 +1,7 @@
 <template>
 	<div id="adminBar">
 		<div class="main">
-			<div class="logo">
+			<div class="logo" @click='jump'>
 		        <span class="hang top"></span>
 		        <span class="title">Sheng仔的博客</span>
 		        <span class="hang bot"></span>
@@ -100,5 +100,6 @@ export default {
 	color: #fff;
 	background-color: rgb(236, 245, 255);
 	border-left: 5px solid rgb(102, 177, 255);
+	box-shadow: 2px 0px 0px rgb(236, 245, 255);
 }
 </style>

@@ -2,6 +2,7 @@
   <div id="index">
     <navBar :active="current"></navBar>
     <div class="bgimg"></div>
+    <user></user>  
     <div class="main">
       <div class="article" v-for="(item,index) in articleList" :key="index">
         <div class="contant">
@@ -53,6 +54,7 @@
 <script>
 import navBar from "./navBar.vue";
 import pagetool from "./pagetool.vue";
+import user from "./user.vue";
 export default {
   name: "index",
   data() {
@@ -65,7 +67,8 @@ export default {
   },
   components: {
     navBar,
-    pagetool
+    pagetool,
+    user
   },
   methods: {
     initTitle: function() {
@@ -73,6 +76,7 @@ export default {
     },
     pageChange: function(data) {
       this.currentPage = data || 1;
+      this.articleList.splice(0,this.articleList.length)
       this.getList();
     },
     getList: function(){
@@ -83,7 +87,6 @@ export default {
       })
       .then((res)=>{
         if(res.data.status == 200){
-          this.articleList = []
           this.articleList = res.data.data
         }
       })
@@ -128,7 +131,7 @@ export default {
 .main .article .contant {
   opacity: 0;
   transform: translateY(-30%);
-  animation: show-down 1s 0.6s;
+  animation: show-down 1s 0.3s;
   animation-fill-mode: forwards;
 }
 .main .title {
@@ -278,5 +281,11 @@ export default {
   border-left: 50px solid transparent;
   border-bottom: 50px solid #fff;
   box-shadow:.2em .2em .3em -.1em rgba(0,0,0,.15);
+}
+#user{
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+  z-index: 999;
 }
 </style>
