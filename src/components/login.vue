@@ -35,7 +35,7 @@ export default {
 				this.tip = '请填写完整信息后登录'
 				return;
 			}
-			this.axios.post('http://localhost:3000/user/login',{
+			this.axios.post('/api/user/login',{
 				mail: this.mail,
 				pwd: this.pwd
 			}).then((res)=>{
@@ -174,5 +174,9 @@ export default {
 }
 .red{
 	color: red;
+}
+.main input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 3px 100px rgb(28,67,79) inset; //改变填充背景色
+    -webkit-color: #d7ecff;
 }
 </style>

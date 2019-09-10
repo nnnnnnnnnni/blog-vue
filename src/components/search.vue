@@ -46,11 +46,11 @@ export default {
       var type = this.type;
       let url = ''
       if(type == '标签'){
-        url = 'http://localhost:3000/article/getbytag'
+        url = '/api/article/getbytag'
       } else if(type == '分类'){
-        url = 'http://localhost:3000/article/getbycategories'
+        url = '/api/article/getbycategories'
       } else{
-        url = 'http://localhost:3000/article/search'
+        url = '/api/article/search'
       }
       this.axios.get(url+'/'+this.title)
       .then(res=>{

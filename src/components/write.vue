@@ -4,6 +4,7 @@
 		<div class="main">
 			<div class="top">
 				写博客
+				<logout></logout>
 			</div>
 			<div class="editArea">
 				<div class='title'>
@@ -47,6 +48,7 @@
 
 <script>
 import adminBar from "./adminBar.vue";
+import logout from "./logout.vue";
 export default {
 	name: 'write',
 	data() {
@@ -63,7 +65,8 @@ export default {
 		}
 	},
 	components: {
-	    adminBar
+	    adminBar,
+	    logout
 	},
 	watch: {
 		edit(){
@@ -81,7 +84,7 @@ export default {
 	        document.title = "写博客 | 管理后台";
   	  	},
     	initInfo: function(){
-			this.axios.get('http://localhost:3000/user/info')
+			this.axios.get('/api/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.tags = res.data.data.tags
@@ -118,9 +121,9 @@ export default {
 			if(!this.title || !this.tag_choosed || !this.selected || !this.edit){
 				return alert("请填写完整")
 			} else if(this._id){
-				var url = 'http://localhost:3000/article/update' 
+				var url = '/api/article/update' 
 			} else if (!this._id){
-                var url = 'http://localhost:3000/article/post'
+                var url = '/api/article/post'
 			}
 
 			this.axios.post(url,{

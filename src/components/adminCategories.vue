@@ -4,6 +4,7 @@
 		<div class="main">
 			<div class="top">
 				标签管理
+				<logout></logout>
 			</div>
 			<div class="area">
 				<div class="in">
@@ -28,28 +29,30 @@
 
 <script>
 import adminBar from "./adminBar.vue";
+import logout from "./logout.vue";
 export default {
 	name: 'adminCategories',
 	data() {
 		return {
 			current: 'adminCategories',
-			categories: [1,32,3,4,1234,4,3,2],
+			categories: [],
 			addcategories: '',
 			tr: false
 		}
 	},
 	components: {
-	    adminBar
+	    adminBar,
+	    logout
 	},
 	methods: {
 	    initTitle: function() {
 	        document.title = "标签管理 | 管理后台";
     	},
     	initInfo: function(){
-			this.axios.get('http://localhost:3000/user/info')
+			this.axios.get('/api/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
-					this.categories = res.data.data.categories
+					this.categories = res.data.data.categories || []
 				} else {
 					this.$router.push({name: 'login'})
 				}
@@ -59,7 +62,7 @@ export default {
 			if(!this.addcategories){
 				this.tr=false
 			} else {
-				this.axios.post('http://localhost:3000/user/addcategories',{categories: this.addcategories})
+				this.axios.post('/api/user/addcategories',{categories: this.addcategories})
 				.then((res)=>{
 					if(res.data.status == 200){
 						this.categories.push(this.addcategories)
@@ -72,7 +75,7 @@ export default {
 			}
 		},
 		delCategories: function(categories,index){
-			this.axios.post('http://localhost:3000/user/delcategories',{categories: categories})
+			this.axios.post('/api/user/delcategories',{categories: categories})
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.categories.splice(index,1)

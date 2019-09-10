@@ -4,6 +4,7 @@
 		<div class="main">
 			<div class="top">
 				标签管理
+				<logout></logout>
 			</div>
 			<div class="area">
 				<div class="in">
@@ -28,28 +29,30 @@
 
 <script>
 import adminBar from "./adminBar.vue";
+import logout from "./logout.vue";
 export default {
 	name: 'adminTag',
 	data() {
 		return {
 			current: 'adminTag',
-			tags: [1,32,3,4,1234,4,3,2],
+			tags: [],
 			tr: false,
 			addtag: '',
 		}
 	},
 	components: {
-	    adminBar
+	    adminBar,
+	    logout
 	},
 	methods: {
 	    initTitle: function() {
 	        document.title = "分类管理 | 管理后台";
     	},
     	initInfo: function(){
-			this.axios.get('http://localhost:3000/user/info')
+			this.axios.get('/api/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
-					this.tags = res.data.data.tags
+					this.tags = res.data.data.tags || []
 				} else {
 					this.$router.push({name: 'login'})
 				}
@@ -59,7 +62,7 @@ export default {
 			if(!this.addtag){
 				this.tr=false
 			} else {
-				this.axios.post('http://localhost:3000/user/addtag',{tag: this.addtag})
+				this.axios.post('/api/user/addtag',{tag: this.addtag})
 				.then((res)=>{
 					if(res.data.status == 200){
 						this.tags.push(this.addtag)
@@ -72,7 +75,7 @@ export default {
 			}
 		},
 		delTag: function(tag,index){
-			this.axios.post('http://localhost:3000/user/deltag',{tag: tag})
+			this.axios.post('/api/user/deltag',{tag: tag})
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.tags.splice(index,1)

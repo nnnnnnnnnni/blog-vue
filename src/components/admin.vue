@@ -4,6 +4,7 @@
 		<div class="main">
 			<div class="top">
 				所有文章
+				<logout></logout>
 			</div>
 			<div class="all">
 				<table>
@@ -56,6 +57,7 @@
 
 <script>
 import adminBar from "./adminBar.vue";
+import logout from "./logout.vue";
 export default {
 	name: 'admin',
 	data() {
@@ -69,14 +71,15 @@ export default {
 		}
 	},
 	components: {
-	    adminBar
+	    adminBar,
+	    logout
 	},
 	methods: {
 	    initTitle: function() {
 	        document.title = "管理后台";
     	},
     	initInfo: function(){
-			this.axios.get('http://localhost:3000/user/info')
+			this.axios.get('/api/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.id = res.data.data._id;
@@ -89,7 +92,7 @@ export default {
 			})
 		},
 		getList: function(){
-			this.axios.get('http://localhost:3000/article/list',{params: {
+			this.axios.get('/api/article/list',{params: {
                         id:this.id,
                         count: 10,
                         page: this.page
@@ -98,14 +101,14 @@ export default {
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.list = res.data.data
-					for(let i = res.data.data.length ;i<10 ;i++){
-						this.list.push([])
-					}
+					// for(let i = res.data.data.length ;i<10 ;i++){
+					// 	this.list.push([])
+					// }
 				}
 			})
 		},
 		updateStatus: function(id,status){
-			this.axios.post('http://localhost:3000/article/updateStatus',{
+			this.axios.post('/api/article/updateStatus',{
 				id: id,
 				status: status == 0 ? 1 : 0
 			})
@@ -119,7 +122,7 @@ export default {
 			this.$router.push({name:'write',params:{data:data}})
 		},
 		del: function(index){
-			this.axios.post('http://localhost:3000/article/del',{id:index})
+			this.axios.post('/api/article/del',{id:index})
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.getList()
@@ -127,7 +130,7 @@ export default {
 			})
 		},
 		getCount: function(){
-			this.axios.get('http://localhost:3000/article/count',{params: {
+			this.axios.get('/api/article/count',{params: {
                         id:this.id
                     }
                 })
@@ -172,10 +175,17 @@ export default {
 	background-color: #fff;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
 	line-height: 77px;
-	padding-left: 30px;
+	padding: 0px 30px;
 	font-size: 1.5em;
 	font-weight: 600;
 	z-index: 2;
+}
+.main .top i{
+	float: right;
+	margin-right: 70px;
+	line-height: 77px;
+	cursor: pointer;
+	font-size: 0.75em;
 }
 .main .all{
 	padding: 60px 30px;

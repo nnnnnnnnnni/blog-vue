@@ -11,8 +11,8 @@
             <span style="border-bottom: 1px dashed #999">{{article.create_time}}</span>
           </div>
           <div class="item bor" v-if="article.update_time">
-            发表于
-            <span style="border-bottom: 1px dashed #999">{{article.create_time}}</span>
+            更新于
+            <span style="border-bottom: 1px dashed #999">{{article.update_time}}</span>
           </div>
           <div class="item">
             <i class="fa fa-folder-o" aria-hidden="true"></i>
@@ -45,7 +45,7 @@ export default {
       window.scrollTo(0,0)
     },
     getArticle: function(){
-      this.axios.get('http://localhost:3000/article/id/'+this.id)
+      this.axios.get('/api/article/id/'+this.id)
       .then((res)=>{
         if(res.data.status == 200){
           let art = res.data.data[0]
