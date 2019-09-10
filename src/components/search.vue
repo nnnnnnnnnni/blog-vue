@@ -7,7 +7,7 @@
           {{title}} <span class="type">{{type}}</span>
         </div>
         <div class="list">
-          <div class="item" v-for='(item,index) in searchList'>
+          <div class="item" v-for='(item,index) in searchList' :key="index"> 
             <div class="info">
               <span class="time">{{item.create_time}}</span>
               <router-link :to="{name:'articles', params:{id: item._id}}">{{item.title}}</router-link>

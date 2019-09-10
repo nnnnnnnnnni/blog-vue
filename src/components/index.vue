@@ -29,11 +29,7 @@
             <span class="item bor">
               <i class="fa fa-tag" aria-hidden="true"></i>
               标签
-              <span
-                class="tag"
-                v-for="(tag,index) in item.tags"
-                :class="{dot:index+1 != item.tags.length}"
-              >{{tag}}</span>
+              <span class="tag" v-for="(tag,index) in item.tags" :class="{dot:index+1 != item.tags.length}" :key="index" >{{tag}}</span>
             </span>
             <span class="item">
               <i class="fa fa-user" aria-hidden="true"></i>

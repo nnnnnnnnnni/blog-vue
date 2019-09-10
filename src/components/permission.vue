@@ -157,7 +157,7 @@ export default {
 	color: red
 }
 .main .per input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 3px 100px #fff inset; //改变填充背景色
+    -webkit-box-shadow: 0 0 3px 100px #fff inset;
     -webkit-color: #d7ecff;
 }
 .main .per .title{

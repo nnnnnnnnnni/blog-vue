@@ -176,7 +176,7 @@ export default {
 	color: red;
 }
 .main input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 3px 100px rgb(28,67,79) inset; //改变填充背景色
+    -webkit-box-shadow: 0 0 3px 100px rgb(28,67,79) inset;
     -webkit-color: #d7ecff;
 }
 </style>
