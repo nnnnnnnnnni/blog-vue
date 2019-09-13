@@ -1,5 +1,10 @@
 <template>
 	<div id="login">
+		<div class="back">
+			<i class="fa fa-hand-o-left" aria-hidden="true"></i>
+			<router-link
+              :to="{name:'index'}">返回首页</router-link>
+		</div>
 		<div class="main">
 			<div class="title">login</div>
 			<input style="display:none;" type="password">
@@ -64,12 +69,33 @@ export default {
     position: fixed;
     z-index: 0;
 }
+#login .back{
+	font-size: 1.2rem;
+    text-shadow: 0 0 1px #fff, 0 0 5px #fff, 0 0 15px #228dff;
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 30px;
+    color: #d7ecff;
+    cursor: pointer;
+    transition: text-shadow 0.3s ease, border-bottom-color 0.5s ease;
+    transform: translateY(-250%);
+    animation: down 1s 0.5s;
+    animation-fill-mode: forwards;
+}
+#login .back a{
+    color: #d7ecff;
+	text-decoration: none;
+	transition: all 0.5s;
+}
 .main{
 	width: 300px;
 	margin: 0 auto;
 	position: relative;
 	top: 50%;
-	transform: translateY(-80%);
+	transform: translateY(-90%);
+	animation: show 5s  0.5s;
+	animation-fill-mode: forwards;
+	opacity: 0;
 	z-index: 999
 }
 .main .title{
@@ -178,5 +204,37 @@ export default {
 .main input:-webkit-autofill {
     -webkit-box-shadow: 0 0 3px 100px rgb(28,67,79) inset;
     -webkit-color: #d7ecff;
+}
+@-webkit-keyframes show {
+	from { opacity: 0 }
+	to { opacity: 1 }
+}
+@-o-keyframes show {
+	from { opacity: 0 }
+	to { opacity: 1 }
+}
+@-moz-keyframes show {
+	from { opacity: 0 }
+	to { opacity: 1 }
+}
+@keyframes show {
+	from { opacity: 0 }
+	to { opacity: 1 }
+}
+@-webkit-keyframes down {
+	from { transform: translateY(-250%); }
+	to { transform: translateY(0); }
+}
+@-o-keyframes down {
+	from { transform: translateY(-250%); }
+	to { transform: translateY(0); }
+}
+@-moz-keyframes down {
+	from { transform: translateY(-250%); }
+	to { transform: translateY(0); }
+}
+@keyframes down {
+	from { transform: translateY(-250%); }
+	to { transform: translateY(0); }
 }
 </style>

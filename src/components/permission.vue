@@ -42,6 +42,26 @@
 				</div>
 				<div class="per" v-if=" this.permission.indexOf('changePermission')!= -1 ">
 					<div class="title">修改权限</div>
+					<div class="users">
+						<div class="user" v-for='(user,key) in users' :key = 'key'> 
+							<div class="name" @click='showKey = key'>{{user.name}}</div>
+							<div class="group" v-show='showKey == key'>
+								<div class="all">
+									未有：
+									<span class="item" v-for='(item,index) in user.noPm' :key='index' @click='inP(key,index,item)'>
+										{{permissions[item].name}}
+									</span>
+								</div>
+								<div class="selected">
+									已有：
+									<span class="item" v-for='(item,index) in user.permission' :key='index' @click='outP(key,index,item)' >
+										{{permissions[item].name}}
+									</span>
+								</div>
+								<button @click='update(user)'>确定</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -59,11 +79,17 @@ export default {
 				{key: 'addNew', name: '添加用户',is: false},
 				{key: 'changePermission', name: '权限修改',is: false}
 			],
+			permissions:{
+				'addNew': {key: 'addNew',name:'添加用户'},
+				'changePermission': {key: 'changePermission',name:'权限修改'}
+			},
 			mail: '',
 			phone: '',
 			pwd:'',
 			name:'',
-			permission: ''
+			permission: '',
+			users: [],
+			showKey: '-1',
 		}
 	},
 	components: {
@@ -79,6 +105,9 @@ export default {
 				if(res.data.status == 200){
 					this.id = res.data.data._id;
 					this.permission = res.data.data.permission
+					if(this.permission.indexOf('changePermission')!= -1 ){
+						this.getUsers()
+					}
 				} else {
 					this.$router.push({name: 'login'})
 				}
@@ -113,6 +142,46 @@ export default {
 					}
 				})
     		}
+    	},
+    	getUsers: function(){
+    		this.axios.get('/api/user/users')
+			.then((res)=>{
+				if(res.data.status == 200){
+					res.data.data.forEach(user=>{
+						let arr = [];
+						for(let key in this.permissions){
+							if(user.permission.indexOf(key) == -1){
+								arr.push(key)
+							}
+						}
+						user.noPm = arr
+					})
+					this.users = res.data.data
+				} else {
+					alert(res.data.msg)
+				}
+			})
+    	},
+    	inP: function(key,index,item){
+    		this.users[key].noPm.splice(index,1)
+    		this.users[key].permission.push(item)
+    	},
+    	outP: function(key,index,item){
+    		this.users[key].noPm.push(item)
+    		this.users[key].permission.splice(index,1)
+    	},
+    	update: function(user){
+    		this.axios.post('/api/user/UpPermission',{
+    			id: user._id,
+    			permission: user.permission
+    		})
+			.then((res)=>{
+				if(res.data.status == 200){
+					alert('修改成功')
+				} else {
+					alert(res.data.status)
+				}
+			})
     	}
   	},
   	created() {
@@ -160,6 +229,10 @@ export default {
 .red{
 	color: red
 }
+.main .per{
+	overflow: hidden;
+	margin-bottom: 30px;
+}
 .main .per input:-webkit-autofill {
     -webkit-box-shadow: 0 0 3px 100px #fff inset;
     -webkit-color: #d7ecff;
@@ -190,7 +263,7 @@ export default {
 	height: 15px;
 	margin-top: 5px;
 }
-.main .per .itemInput button{
+button{
 	display: block;
 	cursor: pointer;
 	background-color: #409eff;
@@ -199,7 +272,65 @@ export default {
 	color: #fff;
 	height: 35px;
 	width: 100px;
-	margin: 10px auto;
 	outline: none;
+}
+.main .per .users{
+	padding: 10px;
+}
+.main .per .users .user{
+	margin-bottom: 20px;
+	position: relative;
+	overflow: hidden;
+}
+.main .per .users .user .name{
+	float: left;
+	cursor: pointer;
+	font-size: 1.2em;
+	text-align: center;
+	padding: 5px;
+	width: 100px;
+}
+.main .per .users .user .group{
+	float: left;
+}
+.main .per .users .user .group .all,.main .per .users .user .group .selected{
+	height: 32px;
+	line-height: 32px;
+	margin: 5px;
+}
+.main .per .users .user .group .selected span{
+	background-color: #67c23a;
+    border-color: #67c23a;
+    color: #fff;
+    display: inline-block;
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border: 1px solid #d9ecff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    cursor: pointer;
+    margin: 0 5px;
+}
+.main .per .users .user .group .all span{
+    display: inline-block;
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border: 1px solid #d9ecff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    cursor: pointer;
+    background-color: #909399;
+    border-color: #909399;
+    color: #fff;
+    margin: 0 5px;
+}
+.main .per .users .user .group button{
+	margin-left: 63px;
 }
 </style> 
