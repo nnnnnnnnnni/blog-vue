@@ -6,6 +6,10 @@
 				权限管理
 			</div>
 			<div class="root">
+				<div class="per" v-if=" !this.permission">
+          			<i class="fa fa-times-circle fa-2x fa-fw" aria-hidden="true"></i>
+					<span class="title">暂无权限，请联系管理员添加</span>
+				</div>
 				<div class="per" v-if=" this.permission.indexOf('addNew')!= -1 ">
 					<div class="title">添加新用户</div>
 					<div class='addForm'>
