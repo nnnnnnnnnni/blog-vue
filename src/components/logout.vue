@@ -14,7 +14,7 @@ export default {
 	},
 	methods: {
 		logout: function(){
-      		this.axios.post('/user/logout')
+      		this.axios.post('/api/user/logout')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.$router.push({name:'login'})

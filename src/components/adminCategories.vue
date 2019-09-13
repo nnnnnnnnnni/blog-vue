@@ -49,7 +49,7 @@ export default {
 	        document.title = "标签管理 | 管理后台";
     	},
     	initInfo: function(){
-			this.axios.get('/user/info')
+			this.axios.get('/api/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.categories = res.data.data.categories || []
@@ -62,7 +62,7 @@ export default {
 			if(!this.addcategories){
 				this.tr=false
 			} else {
-				this.axios.post('/user/addcategories',{categories: this.addcategories})
+				this.axios.post('/api/user/addcategories',{categories: this.addcategories})
 				.then((res)=>{
 					if(res.data.status == 200){
 						this.categories.push(this.addcategories)
@@ -75,7 +75,7 @@ export default {
 			}
 		},
 		delCategories: function(categories,index){
-			this.axios.post('/user/delcategories',{categories: categories})
+			this.axios.post('/api/user/delcategories',{categories: categories})
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.categories.splice(index,1)

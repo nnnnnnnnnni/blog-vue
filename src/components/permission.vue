@@ -74,7 +74,7 @@ export default {
 	        document.title = "权限管理 | 管理后台";
     	},
     	initInfo: function(){
-			this.axios.get('/user/info')
+			this.axios.get('/api/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.id = res.data.data._id;
@@ -95,7 +95,7 @@ export default {
     					group.push(this.permissionGroup[i].key)
     				}
     			}
-    			this.axios.post('/user/signup',{
+    			this.axios.post('/api/user/signup',{
 					mail: this.mail,
 					name: this.name,
 					phone: this.phone,

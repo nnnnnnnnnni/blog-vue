@@ -31,7 +31,7 @@ export default {
       document.title = "文章分类 | 胜仔的博客";
     },
     getCategories: function(){
-      this.axios.get('/article/categories')
+      this.axios.get('/api/article/categories')
       .then((res)=>{
         if(res.data.status == 200){
           this.categorieList = res.data.data
