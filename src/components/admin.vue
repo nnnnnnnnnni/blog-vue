@@ -79,7 +79,7 @@ export default {
 	        document.title = "管理后台";
     	},
     	initInfo: function(){
-			this.axios.get('/api/user/info')
+			this.axios.get('/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.id = res.data.data._id;
@@ -92,7 +92,7 @@ export default {
 			})
 		},
 		getList: function(){
-			this.axios.get('/api/article/list',{params: {
+			this.axios.get('/article/list',{params: {
                         id:this.id,
                         count: 10,
                         page: this.page
@@ -108,7 +108,7 @@ export default {
 			})
 		},
 		updateStatus: function(id,status){
-			this.axios.post('/api/article/updateStatus',{
+			this.axios.post('/article/updateStatus',{
 				id: id,
 				status: status == 0 ? 1 : 0
 			})
@@ -122,7 +122,7 @@ export default {
 			this.$router.push({name:'write',params:{data:data}})
 		},
 		del: function(index){
-			this.axios.post('/api/article/del',{id:index})
+			this.axios.post('/article/del',{id:index})
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.getList()
@@ -130,7 +130,7 @@ export default {
 			})
 		},
 		getCount: function(){
-			this.axios.get('/api/article/count',{params: {
+			this.axios.get('/article/count',{params: {
                         id:this.id
                     }
                 })

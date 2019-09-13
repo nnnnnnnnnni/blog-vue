@@ -45,7 +45,7 @@ export default {
       window.scrollTo(0,0)
     },
     getArticle: function(){
-      this.axios.get('/api/article/id/'+this.id)
+      this.axios.get('/article/id/'+this.id)
       .then((res)=>{
         if(res.data.status == 200){
           let art = res.data.data[0]

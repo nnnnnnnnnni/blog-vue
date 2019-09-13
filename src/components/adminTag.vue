@@ -49,7 +49,7 @@ export default {
 	        document.title = "分类管理 | 管理后台";
     	},
     	initInfo: function(){
-			this.axios.get('/api/user/info')
+			this.axios.get('/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.tags = res.data.data.tags || []
@@ -62,7 +62,7 @@ export default {
 			if(!this.addtag){
 				this.tr=false
 			} else {
-				this.axios.post('/api/user/addtag',{tag: this.addtag})
+				this.axios.post('/user/addtag',{tag: this.addtag})
 				.then((res)=>{
 					if(res.data.status == 200){
 						this.tags.push(this.addtag)
@@ -75,7 +75,7 @@ export default {
 			}
 		},
 		delTag: function(tag,index){
-			this.axios.post('/api/user/deltag',{tag: tag})
+			this.axios.post('/user/deltag',{tag: tag})
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.tags.splice(index,1)

@@ -30,7 +30,7 @@ export default {
       document.title = "标签 | 胜仔的博客";
     },
     getTags: function(){
-      this.axios.get('/api/article/tags')
+      this.axios.get('/article/tags')
       .then((res)=>{
         if(res.data.status == 200){
           this.tagList = res.data.data

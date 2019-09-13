@@ -76,7 +76,7 @@ export default {
       this.getList();
     },
     getList: function(){
-      this.axios.get('/api/article/list',{params: {
+      this.axios.get('/article/list',{params: {
               isShow: true,
               page: this.currentPage
           }
@@ -88,7 +88,7 @@ export default {
       })
     },
     getCount: function(){
-      this.axios.get('/api/article/count',{params: {
+      this.axios.get('/article/count',{params: {
               isShow: true
           }
       })

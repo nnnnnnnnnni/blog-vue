@@ -84,7 +84,7 @@ export default {
 	        document.title = "写博客 | 管理后台";
   	  	},
     	initInfo: function(){
-			this.axios.get('/api/user/info')
+			this.axios.get('/user/info')
 			.then((res)=>{
 				if(res.data.status == 200){
 					this.tags = res.data.data.tags
@@ -121,9 +121,9 @@ export default {
 			if(!this.title || !this.tag_choosed || !this.selected || !this.edit){
 				return alert("请填写完整")
 			} else if(this._id){
-				var url = '/api/article/update' 
+				var url = '/article/update' 
 			} else if (!this._id){
-                var url = '/api/article/post'
+                var url = '/article/post'
 			}
 
 			this.axios.post(url,{

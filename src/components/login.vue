@@ -35,7 +35,7 @@ export default {
 				this.tip = '请填写完整信息后登录'
 				return;
 			}
-			this.axios.post('/api/user/login',{
+			this.axios.post('/user/login',{
 				mail: this.mail,
 				pwd: this.pwd
 			}).then((res)=>{
